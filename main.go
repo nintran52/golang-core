@@ -12,4 +12,10 @@ func main() {
 	for i, todo := range todos {
 		fmt.Printf("%d: %s\n", i+1, todo)
 	}
+
+	if len(todos) == 0 {
+		fmt.Println("Your todo list is empty!")
+	} else {
+		fmt.Println("You have tasks to do!")
+	}
 }
