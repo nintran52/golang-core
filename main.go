@@ -2,13 +2,16 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"sync"
 )
 
 type Todo struct {
 	Task      string
 	Completed bool
 }
+
+var mu sync.Mutex
+var todoList = []string{}
 
 func main() {
 	name := "Golang Learners"
@@ -28,15 +31,17 @@ func main() {
 		fmt.Println("You have tasks to do!")
 	}
 
-	tasks := make(chan string)
+	var wg sync.WaitGroup
 
-	go addTask("Buy groceries", tasks)
-	go addTask("Complete homework", tasks)
+	tasks := []string{"Buy groceries", "Complete homework", "Go for a run"}
 
-	for i := 0; i < 2; i++ {
-		task := <-tasks
-		fmt.Printf("Task added: %s\n", task)
+	for _, task := range tasks {
+		wg.Add(1)
+		go addTask(task, &wg)
 	}
+
+	wg.Wait()
+	fmt.Println("Final Todo List:", todoList)
 }
 
 func printTodos(todos []Todo) {
@@ -49,7 +54,9 @@ func printTodos(todos []Todo) {
 	}
 }
 
-func addTask(task string, c chan string) {
-	time.Sleep(2 * time.Second) // Simulate adding tasks that take time
-	c <- task
+func addTask(task string, wg *sync.WaitGroup) {
+	defer wg.Done()
+	mu.Lock()
+	todoList = append(todoList, task)
+	mu.Unlock()
 }
