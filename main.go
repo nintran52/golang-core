@@ -3,5 +3,6 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("Welcome to the Todo List App")
+	name := "Golang Learners"
+	fmt.Printf("Welcome, %s, to the Todo List App!\n", name)
 }
