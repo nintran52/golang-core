@@ -45,6 +45,11 @@ func main() {
 
 	wg.Wait()
 	fmt.Println("Final Todo List:", todoList)
+
+	err := deleteTask([]Todo{})
+	if err != nil {
+		fmt.Println("Error:", err)
+	}
 }
 
 func printTodos(todos []Todo) {
@@ -62,4 +67,12 @@ func addTask(task string, wg *sync.WaitGroup) {
 	mu.Lock()
 	todoList = append(todoList, task)
 	mu.Unlock()
+}
+
+func deleteTask(tasks []Todo) error {
+	if len(tasks) == 0 {
+		return fmt.Errorf("Task cannot be empty")
+	}
+
+	return nil
 }
