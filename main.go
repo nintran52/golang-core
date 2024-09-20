@@ -2,13 +2,18 @@ package main
 
 import "fmt"
 
+type Todo struct {
+	Task      string
+	Completed bool
+}
+
 func main() {
 	name := "Golang Learners"
 	fmt.Printf("Welcome, %s, to the Todo List App!\n", name)
 
-	todos := map[string]bool{
-		"Buy groceries":     false,
-		"Complete homework": true,
+	todos := []Todo{
+		{"Buy groceries", false},
+		{"Complete homework", true},
 	}
 	fmt.Println(todos)
 
@@ -21,12 +26,12 @@ func main() {
 	}
 }
 
-func printTodos(todos map[string]bool) {
-	for task, completed := range todos {
+func printTodos(todos []Todo) {
+	for _, todo := range todos {
 		status := "not completed"
-		if completed {
+		if todo.Completed {
 			status = "completed"
 		}
-		fmt.Printf("%s: %s\n", task, status)
+		fmt.Printf("%s: %s\n", todo.Task, status)
 	}
 }
