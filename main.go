@@ -50,6 +50,8 @@ func main() {
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
+
+	doneTask("")
 }
 
 func printTodos(todos []Todo) {
@@ -75,4 +77,18 @@ func deleteTask(tasks []Todo) error {
 	}
 
 	return nil
+}
+
+func doneTask(task string) {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered from panic:", r)
+		}
+	}()
+
+	if task == "" {
+		panic("Task cannot be empty")
+	}
+
+	fmt.Printf("Task done: %s\n", task)
 }
