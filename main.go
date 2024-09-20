@@ -6,7 +6,10 @@ func main() {
 	name := "Golang Learners"
 	fmt.Printf("Welcome, %s, to the Todo List App!\n", name)
 
-	todos := []string{"Buy groceries", "Complete homework", "Read Golang docs"}
+	todos := map[string]bool{
+		"Buy groceries":     false,
+		"Complete homework": true,
+	}
 	fmt.Println(todos)
 
 	printTodos(todos)
@@ -18,8 +21,12 @@ func main() {
 	}
 }
 
-func printTodos(todos []string) {
-	for i, todo := range todos {
-		fmt.Printf("%d: %s\n", i+1, todo)
+func printTodos(todos map[string]bool) {
+	for task, completed := range todos {
+		status := "not completed"
+		if completed {
+			status = "completed"
+		}
+		fmt.Printf("%s: %s\n", task, status)
 	}
 }
