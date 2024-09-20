@@ -13,6 +13,11 @@ type TodoList struct {
 	todos []Todo
 }
 
+type TaskManager interface {
+	Add(task string)
+	Complete(task string)
+}
+
 func (t *TodoList) Add(task string) {
 	todo := Todo{Task: task, Completed: false}
 	t.todos = append(t.todos, todo)
@@ -31,9 +36,10 @@ func (t *TodoList) Complete(task string) {
 }
 
 func main() {
-	todoList := TodoList{}
-	todoList.Add("Buy groceries")
-	todoList.Add("Complete homework")
+	var manager TaskManager = &TodoList{}
 
-	todoList.Complete("Buy groceries")
+	manager.Add("Buy groceries")
+	manager.Add("Complete homework")
+
+	manager.Complete("Buy groceries")
 }
