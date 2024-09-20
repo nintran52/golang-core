@@ -14,6 +14,9 @@ var mu sync.Mutex
 var todoList = []string{}
 
 func main() {
+	defer fmt.Println("Program finished.") // Last execution before program exit
+	fmt.Println("Starting program...")
+
 	name := "Golang Learners"
 	fmt.Printf("Welcome, %s, to the Todo List App!\n", name)
 
